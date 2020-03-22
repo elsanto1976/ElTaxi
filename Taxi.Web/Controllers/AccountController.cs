@@ -34,7 +34,7 @@ public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
 {
 	if (ModelState.IsValid)
 	{
-    	var user = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
+    	var user = await _userHelper.GetUserAsync(User.Identity.Name);
     	var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
         	if (result.Succeeded)
         	{
@@ -50,7 +50,7 @@ public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
 }
         public async Task<IActionResult> ChangeUser()
         {
-            UserEntity user = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
+            UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);
             EditUserViewModel model = new EditUserViewModel
             {
                 Address = user.Address,
@@ -77,7 +77,7 @@ public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
                     path = await _imageHelper.UploadImageAsync(model.PictureFile, "Users");
                 }
 
-                UserEntity user = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
+                UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);
 
                 user.Document = model.Document;
                 user.FirstName = model.FirstName;
