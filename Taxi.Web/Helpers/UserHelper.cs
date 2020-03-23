@@ -22,7 +22,10 @@ namespace Taxi.Web.Helpers
             _roleManager = roleManager;
             _signInManager = signInManager;
         }
-
+        public async Task<SignInResult> ValidatePasswordAsync(UserEntity user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        }
         public async Task<UserEntity> GetUserAsync(Guid userId)
         {
             return await _userManager.FindByIdAsync(userId.ToString());
@@ -82,7 +85,6 @@ namespace Taxi.Web.Helpers
                 });
             }
         }
-
         public async Task<UserEntity> GetUserAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
@@ -101,8 +103,6 @@ namespace Taxi.Web.Helpers
                 model.RememberMe,
                 false);
         }
-
-
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
